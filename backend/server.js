@@ -5,12 +5,9 @@ require('dotenv').config();
 
 const app = express();
 
-// Configuration CORS pour la production
+// Configuration CORS
 const corsOptions = {
-  origin: [
-    'https://ksambaa.github.io', // Votre URL de portfolio
-    'http://localhost:3000' // Pour le développement local
-  ],
+  origin: ['https://ksambaa.github.io', 'http://localhost:3000'],
   methods: ['POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type']
 };
@@ -27,6 +24,12 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// Route test
+app.get('/', (req, res) => {
+  res.json({ message: 'Backend Portfolio en ligne!' });
+});
+
+// Route pour envoyer un email
 app.post('/send-email', async (req, res) => {
   const { name, email, message } = req.body;
 
@@ -50,11 +53,6 @@ app.post('/send-email', async (req, res) => {
     console.error('Erreur lors de l\'envoi de l\'email:', error);
     res.status(500).json({ message: 'Erreur lors de l\'envoi de l\'email' });
   }
-});
-
-// Route de test pour vérifier que le serveur fonctionne
-app.get('/', (req, res) => {
-  res.json({ message: 'Backend Portfolio en ligne!' });
 });
 
 const PORT = process.env.PORT || 5000;

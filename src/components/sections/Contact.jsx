@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { MailIcon, PhoneIcon, MapPinIcon } from 'lucide-react';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+// Utilisez l'URL de votre backend sur Render
+const API_URL = 'https://portfolio-backend-0kfr.onrender.com';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -20,35 +21,35 @@ const Contact = () => {
     });
   };
 
-  // Dans Contact.jsx, modifiez la partie handleSubmit :
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsSubmitting(true);
-  setStatus({ type: '', message: '' });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setStatus({ type: '', message: '' });
 
-  try {
-    const response = await fetch('https://portfolio-backend-0kfr.onrender.com/send-email', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData)
-    });
+    try {
+      const response = await fetch(`${API_URL}/send-email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (response.ok) {
-      setStatus({ type: 'success', message: 'Message envoyé avec succès!' });
-      setFormData({ name: '', email: '', message: '' });
-    } else {
-      setStatus({ type: 'error', message: data.message || 'Une erreur est survenue' });
+      if (response.ok) {
+        setStatus({ type: 'success', message: 'Message envoyé avec succès!' });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setStatus({ type: 'error', message: data.message || 'Une erreur est survenue' });
+      }
+    } catch (error) {
+      console.error('Erreur:', error);
+      setStatus({ type: 'error', message: 'Erreur de connexion au serveur' });
+    } finally {
+      setIsSubmitting(false);
     }
-  } catch (error) {
-    setStatus({ type: 'error', message: 'Erreur de connexion au serveur' });
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+  };
 
   return (
     <section id="contact" className="py-20 bg-gray-50">

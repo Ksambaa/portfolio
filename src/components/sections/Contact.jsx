@@ -20,35 +20,35 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setStatus({ type: '', message: '' });
+  // Dans Contact.jsx, modifiez la partie handleSubmit :
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setStatus({ type: '', message: '' });
 
-    try {
-      const response = await fetch(`${API_URL}/send-email`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      });
+  try {
+    const response = await fetch('https://portfolio-backend-0kfr.onrender.com/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData)
+    });
 
-      const data = await response.json();
+    const data = await response.json();
 
-      if (response.ok) {
-        setStatus({ type: 'success', message: 'Message envoyé avec succès!' });
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        setStatus({ type: 'error', message: data.message || 'Une erreur est survenue' });
-      }
-    } catch (error) {
-      console.error('Erreur:', error);
-      setStatus({ type: 'error', message: 'Erreur de connexion au serveur' });
-    } finally {
-      setIsSubmitting(false);
+    if (response.ok) {
+      setStatus({ type: 'success', message: 'Message envoyé avec succès!' });
+      setFormData({ name: '', email: '', message: '' });
+    } else {
+      setStatus({ type: 'error', message: data.message || 'Une erreur est survenue' });
     }
-  };
+  } catch (error) {
+    setStatus({ type: 'error', message: 'Erreur de connexion au serveur' });
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <section id="contact" className="py-20 bg-gray-50">

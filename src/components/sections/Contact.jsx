@@ -2,17 +2,16 @@
 import React, { useState } from 'react';
 import { MailIcon, PhoneIcon, MapPinIcon } from 'lucide-react';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-  };
+  const [status, setStatus] = useState({ type: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -21,11 +20,42 @@ const Contact = () => {
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setStatus({ type: '', message: '' });
+
+    try {
+      const response = await fetch(`${API_URL}/send-email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus({ type: 'success', message: 'Message envoyé avec succès!' });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setStatus({ type: 'error', message: data.message || 'Une erreur est survenue' });
+      }
+    } catch (error) {
+      console.error('Erreur:', error);
+      setStatus({ type: 'error', message: 'Erreur de connexion au serveur' });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section id="contact" className="py-20 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold text-center mb-12">Contact</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Info de contact */}
           <div>
             <div className="bg-white rounded-lg p-6 shadow-sm">
               <h3 className="text-xl font-semibold mb-6">Informations de Contact</h3>
@@ -45,8 +75,21 @@ const Contact = () => {
               </div>
             </div>
           </div>
+
+          {/* Formulaire */}
           <div>
             <form onSubmit={handleSubmit} className="bg-white rounded-lg p-6 shadow-sm">
+              {status.message && (
+                <div 
+                  className={`mb-4 p-3 rounded ${
+                    status.type === 'success' 
+                      ? 'bg-green-100 text-green-700' 
+                      : 'bg-red-100 text-red-700'
+                  }`}
+                >
+                  {status.message}
+                </div>
+              )}
               <div className="mb-4">
                 <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
                   Nom
@@ -59,6 +102,7 @@ const Contact = () => {
                   onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="mb-4">
@@ -73,6 +117,7 @@ const Contact = () => {
                   onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="mb-4">
@@ -87,13 +132,17 @@ const Contact = () => {
                   rows="4"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
+                  disabled={isSubmitting}
                 />
               </div>
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+                disabled={isSubmitting}
+                className={`w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors ${
+                  isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
               >
-                Envoyer
+                {isSubmitting ? 'Envoi en cours...' : 'Envoyer'}
               </button>
             </form>
           </div>

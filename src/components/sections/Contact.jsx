@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import { MailIcon, PhoneIcon, MapPinIcon } from 'lucide-react';
 
 // Utilisez l'URL de votre backend sur Render
-const API_URL = 'https://portfolio-backend-0kfr.onrender.com';
+const API_URL = process.env.NODE_ENV === 'production' 
+  ? 'https://portfolio-backend-0kfr.onrender.com'
+  : 'http://localhost:5000';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -25,7 +27,7 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setStatus({ type: '', message: '' });
-
+  
     try {
       const response = await fetch(`${API_URL}/send-email`, {
         method: 'POST',

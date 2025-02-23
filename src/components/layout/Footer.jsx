@@ -1,5 +1,3 @@
-// src/components/layout/Footer.jsx
-import React from 'react';
 import { GithubIcon, LinkedinIcon, MailIcon } from 'lucide-react';
 
 const Footer = () => {

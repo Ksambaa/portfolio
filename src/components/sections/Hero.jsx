@@ -1,6 +1,5 @@
-import React from 'react';
 import { GithubIcon, LinkedinIcon, MailIcon } from 'lucide-react';
-import profilePic from '../../assets/profile.jpg'; // Importez l'image
+import profilePic from '../../assets/profile.jpg';
 
 const Hero = () => {
   return (
@@ -8,7 +7,7 @@ const Hero = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="text-center">
           <img
-            src={profilePic}  // Utilisez la variable importée
+            src={profilePic}  
             alt="Profile"
             className="w-32 h-32 rounded-full mx-auto mb-8 object-cover"
           />

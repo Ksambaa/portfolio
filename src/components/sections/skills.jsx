@@ -1,5 +1,3 @@
-// src/components/sections/Skills.jsx
-import React from 'react';
 import { motion } from 'framer-motion';
 
 const skillCategories = [
@@ -21,7 +19,7 @@ const skillCategories = [
   }
 ];
 
-const skills = () => {
+const Skills = () => {
   return (
     <section id="skills" className="py-20 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,4 +53,4 @@ const skills = () => {
   );
 };
 
-export default skills;
+export default Skills;

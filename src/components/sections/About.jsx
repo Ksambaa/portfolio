@@ -1,5 +1,3 @@
-// src/components/sections/About.jsx
-import React from 'react';
 import { motion } from 'framer-motion';
 
 const About = () => {
@@ -10,28 +8,33 @@ const About = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
           className="bg-white rounded-lg shadow-sm p-8"
         >
-          <h2 className="text-3xl font-bold mb-6">À Propos</h2>
+          <h2 className="text-3xl font-bold mb-6 text-gray-900">À Propos</h2>
+          
           <div className="space-y-4">
-            <p className="text-gray-700">
+            <p className="text-gray-700 leading-relaxed">
               Étudiant en Master 2 Data Science et Intelligence Artificielle à l'École Centrale de Lille, 
               passionné par le développement et l'IA appliquée.
             </p>
-            <p className="text-gray-700">
+            
+            <p className="text-gray-700 leading-relaxed">
               Formation solide en ingénierie des systèmes complexes à l'École Centrale Casablanca, 
               complétée par des certifications en gestion de projet et méthodologies Agile.
             </p>
+
             <div className="mt-6">
-              <h3 className="text-xl font-semibold mb-3">Formation</h3>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Formation</h3>
               <ul className="space-y-2">
                 <li className="text-gray-700">• École Centrale de Lille - Master 2 Data Science et IA</li>
                 <li className="text-gray-700">• École Centrale Casablanca - Ingénierie des systèmes complexes</li>
                 <li className="text-gray-700">• Classes Préparatoires Ibn Timiya - MP</li>
               </ul>
             </div>
+
             <div className="mt-6">
-              <h3 className="text-xl font-semibold mb-3">Langues</h3>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">Langues</h3>
               <ul className="space-y-2">
                 <li className="text-gray-700">• Anglais C1 (TOEIC : 945/990)</li>
                 <li className="text-gray-700">• Français B2 (Dalf C1)</li>

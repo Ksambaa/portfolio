@@ -1,5 +1,3 @@
-// src/components/sections/Projects.jsx
-import React from 'react';
 import { motion } from 'framer-motion';
 import { CodeIcon, BrainIcon, BellIcon } from 'lucide-react';
 

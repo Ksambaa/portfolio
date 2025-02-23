@@ -5,5 +5,7 @@ npm-debug.log*
 #  I'm a Mac user
 .DS_Store 
 
-
+# Some other useless files
+app.txt
+scrap.py
 

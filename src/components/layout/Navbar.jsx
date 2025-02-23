@@ -1,42 +1,52 @@
 import { useState } from 'react';
 import { Menu } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
+import ThemeToggle from './ThemeToggle';
+import LanguageToggle from './LanguageToggle';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useLanguage();
   
   const navItems = [
-    { name: 'About', href: '#about' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Skills', href: '#skills' }
+    { name: t('about'), href: '#about' },
+    { name: t('experience'), href: '#experience' },
+    { name: t('projects'), href: '#projects' },
+    { name: t('skills'), href: '#skills' }
   ];
 
   return (
-    <nav className="fixed w-full bg-white shadow-md z-50">
+    <nav className="fixed w-full bg-white dark:bg-dark-card shadow-md z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex-shrink-0 flex items-center">
-            <h1 className="text-xl font-bold">Khalil SAMBA</h1>
+            <h1 className="text-xl font-bold dark:text-dark-text">Khalil SAMBA</h1>
           </div>
           
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                className="ml-8 text-gray-700 hover:text-gray-900"
+                className="text-gray-700 dark:text-dark-muted hover:text-gray-900 dark:hover:text-dark-text"
               >
                 {item.name}
               </a>
             ))}
+            <div className="flex items-center space-x-4">
+              <ThemeToggle />
+              <LanguageToggle />
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center space-x-4">
+            <ThemeToggle />
+            <LanguageToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-700 hover:text-gray-900"
+              className="text-gray-700 dark:text-dark-muted hover:text-gray-900 dark:hover:text-dark-text"
             >
               <Menu />
             </button>
@@ -52,7 +62,7 @@ const Navbar = () => {
               <a
                 key={item.name}
                 href={item.href}
-                className="block px-3 py-2 text-gray-700 hover:text-gray-900"
+                className="block px-3 py-2 text-gray-700 dark:text-dark-muted hover:text-gray-900 dark:hover:text-dark-text"
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}

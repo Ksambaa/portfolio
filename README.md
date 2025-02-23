@@ -14,6 +14,7 @@ Animations fluides avec Framer Motion
 Mode sombre/clair (à venir)
 
 ## 🛠 Technologies Utilisées
+
 ### Frontend
 
 React

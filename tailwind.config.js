@@ -9,7 +9,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // You can customize your dark mode colors here
         dark: {
           bg: '#1a1a1a',
           card: '#2d2d2d',

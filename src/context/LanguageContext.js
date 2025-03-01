@@ -17,8 +17,23 @@ export const LanguageProvider = ({ children }) => {
     setLanguage(prev => prev === 'fr' ? 'en' : 'fr');
   };
 
-  const t = (key) => {
-    return translations[language][key] || key;
+  // Enhanced t function with variable interpolation
+  const t = (key, variables = {}) => {
+    // Get the translation string or fallback to key
+    const text = translations[language][key] || key;
+    
+    // If no variables, return the text as is
+    if (Object.keys(variables).length === 0) {
+      return text;
+    }
+    
+    // Replace variables in the format {{varName}}
+    let result = text;
+    Object.keys(variables).forEach(varName => {
+      result = result.replace(new RegExp(`{{${varName}}}`, 'g'), variables[varName]);
+    });
+    
+    return result;
   };
 
   return (
